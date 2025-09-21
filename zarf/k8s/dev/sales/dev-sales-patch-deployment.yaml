@@ -1,0 +1,15 @@
+#Deployment Patch
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sales
+  namespace: sales-system
+
+spec:
+  replicas: 1
+  strategy: Recreate
+
+  template:
+    spec:
+      dnsPolicy: ClusterFirstWithHostNet
+      hotNetwork: true
