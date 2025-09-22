@@ -65,3 +65,18 @@ dev-up:
 
 dev-down:
 	kind delete cluster --name $(KIND_CLUSTER)
+
+dev-status-all:
+	kubectl get nodes -o wide
+	kubectl get svc -o wide
+	kubectl get pods -o wide --watch --all-namespaces
+
+dev-status:
+	watch -n 2 kubectl get pods -o wide --all-namespaces
+
+# ---------------------------------------------------------------------
+dev-load:
+	kind load docker-image $(SALES_IMAGE) --name $(KIND_CLUSTER)
+
+dev-apply:
+	kustomize build zarf/k8s/dev/sales | kubectl apply -f -

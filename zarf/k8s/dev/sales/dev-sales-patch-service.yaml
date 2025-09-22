@@ -10,4 +10,4 @@ spec:
   ports:
   - name: sales
     port: 3000
-    targetPort: sales
+    targetPort: 3000
