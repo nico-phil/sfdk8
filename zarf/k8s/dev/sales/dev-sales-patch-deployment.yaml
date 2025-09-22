@@ -7,9 +7,10 @@ metadata:
 
 spec:
   replicas: 1
-  strategy: Recreate
+  strategy:
+    type: Recreate
 
   template:
     spec:
       dnsPolicy: ClusterFirstWithHostNet
-      hotNetwork: true
+      hostNetwork: true
