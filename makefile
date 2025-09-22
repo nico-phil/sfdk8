@@ -80,3 +80,22 @@ dev-load:
 
 dev-apply:
 	kustomize build zarf/k8s/dev/sales | kubectl apply -f -
+
+dev-restart:
+	kubectl rollout restart deployment $(SALES_APP) --namespace=$(NAMESPACE)
+
+dev-update: 
+	build dev-load dev-restart
+
+dev-update-apply: 
+	build dev-load dev-apply
+
+dev-logs:
+	kubectl logs --namespace=$(NAMESPACE) -l app=$(SALES_APP) --all-containers=true -f --tail=1000 --max-log-requests=6
+
+# ---------------------------------------------------------------------
+dev-describe-deployment:
+	kubectl describe deployment $(SALES_APP) --namespace=$(NAMESPACE)
+
+dev-describe-sales:
+	kubectl describe pod $(SALES_APP) --namespace=$(NAMESPACE)
