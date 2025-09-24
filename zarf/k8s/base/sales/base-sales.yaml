@@ -26,7 +26,7 @@ spec:
 
       containers:
       - name: sales
-        image: localhost/lab/sales:0.0.1
+        image: sales-image
         ports:
         - name: sales
           containerPort: 3000
