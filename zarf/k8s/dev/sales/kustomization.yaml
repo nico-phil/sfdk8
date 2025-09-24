@@ -7,8 +7,8 @@ patches:
   - path: ./dev-sales-patch-service.yaml
 images:
   - name: sales-image
-    newName: localhost/nico-phil/sales
+    newName: localhost/lab/sales
     newTag: 0.0.1
   - name: metrics-image
-    newName: localhost/nico-phil/metrics
+    newName: localhost/lab/metrics
     newTag: 0.0.1

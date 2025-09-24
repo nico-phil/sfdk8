@@ -28,10 +28,10 @@ spec:
       - name: sales
         image: sales-image
         ports:
-        - name: sales
-          containerPort: 3000
-        - name: sales-debug
-          containerPort: 3010
+          - name: sales
+            containerPort: 3000
+          - name: sales-debug
+            containerPort: 3010
 
 ---
 apiVersion: v1

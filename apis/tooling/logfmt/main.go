@@ -12,6 +12,8 @@ import (
 	"github.com/go-json-experiment/json"
 )
 
+var build = "develop"
+
 var service string
 
 func init() {

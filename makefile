@@ -72,11 +72,12 @@ dev-status-all:
 	kubectl get pods -o wide --watch --all-namespaces
 
 dev-status:
-	watch -n 2 kubectl get pods -o wide --all-namespaces
+	kubectl get pods -o wide -A --watch
 
 # ---------------------------------------------------------------------
 dev-load:
 	kind load docker-image $(SALES_IMAGE) --name $(KIND_CLUSTER)
+# 	kind load docker-image $(SALES_IMAGE) --name $(KIND_CLUSTER)
 
 dev-apply:
 	kustomize build zarf/k8s/dev/sales | kubectl apply -f -
