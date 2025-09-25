@@ -18,4 +18,11 @@ spec:
       containers:
         - name : sales
           imagePullPolicy: Never
+          resources:
+            requests:
+              cpu: "250m" # I need access to 25ms/100ms on one core
+              memory: "36Mi"
+            limits:
+              cpu: "250m"
+              memory: "36Mi"
         
