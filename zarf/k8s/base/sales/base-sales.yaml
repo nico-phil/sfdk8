@@ -49,8 +49,12 @@ spec:
   selector:
     app: sales
 
-  # type: NodePort
-  # ports:
-  #   - port: 80
-  #     targetPort: 80
-  #     nodePort: 30008 #the range should be 30000-32767
+  type: ClusterIP
+  ports:
+    - name: sales
+      port: 3000
+      targetPort: 3000
+    
+    - name: sales-debug
+      port: 3010
+      targetPort: 3010
