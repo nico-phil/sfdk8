@@ -91,8 +91,7 @@ dev-apply:
 dev-restart:
 	kubectl rollout restart deployment $(SALES_APP) --namespace=$(NAMESPACE)
 
-dev-update: 
-	build dev-load dev-restart
+dev-update: build dev-load dev-restart
 
 dev-update-apply: build dev-load dev-apply
 	

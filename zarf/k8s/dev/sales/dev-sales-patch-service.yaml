@@ -10,7 +10,7 @@ spec:
     - name: sales
       port: 3000
       targetPort: 3000
-    
+  
     - name: sales-debug
       port: 3010
       targetPort: 3010
