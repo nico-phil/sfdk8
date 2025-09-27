@@ -3,8 +3,8 @@ package mux
 import (
 	"os"
 
+	"github.com/nico-phil/service/apis/services/api/mid"
 	"github.com/nico-phil/service/apis/services/sales/route/sys/checkapi"
-	"github.com/nico-phil/service/app/api/mid"
 	"github.com/nico-phil/service/fondation/logger"
 	"github.com/nico-phil/service/fondation/web"
 )
