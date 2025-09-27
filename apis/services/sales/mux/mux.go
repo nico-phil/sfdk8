@@ -10,7 +10,7 @@ import (
 )
 
 func WebAPI(log *logger.Logger, shutdonw chan os.Signal) *web.App {
-	mux := web.New(shutdonw, mid.Logger(log), mid.Errors(log), mid.Panics())
+	mux := web.New(shutdonw, mid.Logger(log), mid.Errors(log), mid.Metrics(), mid.Panics())
 
 	checkapi.Routes(mux)
 
