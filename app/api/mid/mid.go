@@ -1,33 +1,28 @@
+// Package mid provides app level middleware support
 package mid
 
 import (
 	"context"
-	"net/http"
+	"fmt"
 
 	"github.com/nico-phil/service/fondation/logger"
-	"github.com/nico-phil/service/fondation/web"
 )
 
-func Logger(log *logger.Logger) web.MidHandler {
+type Handler func(context.Context) error
 
-	m := func(handler web.Handler) web.Handler {
+// Logger writes information about the request to the logs.
+func Logger(ctx context.Context, log *logger.Logger, path string, rawQuery string, method string, remoteAddr string, handler Handler) error {
+	// v := web.GetValues(ctx)
 
-		h := func(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
-
-			// logging start
-			log.Info(ctx, "request started", "method", r.Method, "path", r.URL.Path, "remoteaddr", r.RemoteAddr)
-
-			err := handler(ctx, w, r)
-
-			// logging end
-			log.Info(ctx, "request complete", "method", r.Method, "path", r.URL.Path, "remoteaddr", r.RemoteAddr)
-			return err
-		}
-
-		return h
-
+	if rawQuery != "" {
+		path = fmt.Sprintf("%s?%s", path, rawQuery)
 	}
 
-	return m
+	log.Info(ctx, "request started", "method", method, "path", path, "remoteaddr", remoteAddr)
 
+	err := handler(ctx)
+
+	log.Info(ctx, "request completed", "method", method, "path", path, "remoteaddr", remoteAddr)
+
+	return err
 }
