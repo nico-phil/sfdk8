@@ -42,3 +42,17 @@ func testerr(ctx context.Context, w http.ResponseWriter, r *http.Request) error 
 
 	return web.Respond(ctx, w, status, http.StatusOK)
 }
+
+func testpanic(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+	if n := rand.Intn(100); n%2 == 0 {
+		panic("WE ARE PANICKING")
+	}
+
+	status := struct {
+		Status string
+	}{
+		Status: "OK REDINESS",
+	}
+
+	return web.Respond(ctx, w, status, http.StatusOK)
+}
