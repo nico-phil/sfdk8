@@ -16,6 +16,14 @@ tidy:
 	go mod vendor
 
 
+curl-liveness: 
+	curl -i -X GET http://localhost:3000/liveness
+
+
+curl-readiness: 
+	curl -i -X GET http://localhost:3000/readiness
+
+
 curl-panic: 
 	curl -i -X GET http://localhost:3000/testpanic
 
