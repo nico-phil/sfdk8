@@ -16,6 +16,10 @@ tidy:
 	go mod vendor
 
 
+curl-panic: 
+	curl -i -X GET http://localhost:3000/testpanic
+
+
 # ==============================================================================
 # Define dependencies
 
