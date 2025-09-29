@@ -2,8 +2,16 @@
 SHELL_PATH = /bin/ash
 SHELL = $(if $(wildcard $(SHELL_PATH)),/bin/ash,/bin/bash)
 
+#RSA keys. To generate a private/public key PEM file.
+# openssl genpkey -algorithm RSA -out private.pem -pkeyopt rsa_keygen_bits:2048
+# openssl rsa -pubout -in private.pem -out public.pem
+
+
 run:
 	go run apis/services/sales/main.go | go run apis/tooling/logfmt/main.go
+
+admin: 
+	go run apis/tooling/admin/main.go
 
 help:
 	go run apis/services/sales/main.go --help
