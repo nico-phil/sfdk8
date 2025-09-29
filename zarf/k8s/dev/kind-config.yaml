@@ -28,8 +28,8 @@ nodes:
   - containerPort: 3100
     hostPort: 3100
   # Postgres
-  # - containerPort: 5432
-  #   hostPort: 5432
+  - containerPort: 5432
+    hostPort: 5432
   # Prometheus
   - containerPort: 9090
     hostPort: 9090
