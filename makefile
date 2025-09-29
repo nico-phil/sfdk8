@@ -79,7 +79,7 @@ dev-up:
 
 	kubectl wait --timeout=120s --namespace=local-path-storage --for=condition=Available deployment/local-path-provisioner
 
-# 	kind load docker-image $(POSTGRES) --name $(KIND_CLUSTER)
+	kind load docker-image $(POSTGRES) --name $(KIND_CLUSTER)
 
 dev-down:
 	kind delete cluster --name $(KIND_CLUSTER)
@@ -95,7 +95,10 @@ dev-status:
 # ---------------------------------------------------------------------
 dev-load:
 	kind load docker-image $(SALES_IMAGE) --name $(KIND_CLUSTER)
-# 	kind load docker-image $(SALES_IMAGE) --name $(KIND_CLUSTER)
+	kind load docker-image $(POSTGRES) --name $(KIND_CLUSTER)
+
+dev-load-db:
+	kind load docker-image $(POSTGRES) --name $(KIND_CLUSTER)
 
 dev-apply:
 	kustomize build zarf/k8s/dev/sales | kubectl apply -f -
@@ -118,6 +121,10 @@ dev-describe-deployment:
 dev-describe-sales:
 	kubectl describe pod $(SALES_APP) --namespace=$(NAMESPACE)
 
+dev-start-db:
+	docker run -d -p 5432:5432 --name lab_db -e POSTGRES_PASSWORD=lab_db -e POSTGRES_DB=lab_db postgres
+
+  
 
 # ==============================================================================
 # Metrics and Tracing
