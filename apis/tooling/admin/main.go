@@ -21,7 +21,7 @@ import (
 )
 
 func main() {
-	err := GenKey()
+	err := GenToken()
 	if err != nil {
 		log.Fatalln(err)
 	}
