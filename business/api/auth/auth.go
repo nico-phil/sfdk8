@@ -106,7 +106,7 @@ func (a *Auth) Authenticate(ctx context.Context, bearerToken string) (Claims, er
 
 	kid, ok := kidRaw.(string)
 	if !ok {
-		return Claims{}, fmt.Errorf("kid malformed %w", ok)
+		return Claims{}, fmt.Errorf("kid malformed %v", ok)
 	}
 
 	pem, err := a.keyLookup.PublicKey(kid)
