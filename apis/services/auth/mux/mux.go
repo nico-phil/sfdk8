@@ -4,7 +4,7 @@ import (
 	"os"
 
 	"github.com/nico-phil/service/apis/services/api/mid"
-	"github.com/nico-phil/service/apis/services/auth/routes/checkapi"
+	"github.com/nico-phil/service/apis/services/auth/route/checkapi"
 	"github.com/nico-phil/service/business/api/auth"
 	"github.com/nico-phil/service/fondation/logger"
 	"github.com/nico-phil/service/fondation/web"
