@@ -8,7 +8,8 @@ SHELL = $(if $(wildcard $(SHELL_PATH)),/bin/ash,/bin/bash)
 
 
 run:
-	go run apis/services/sales/main.go | go run apis/tooling/logfmt/main.go
+	go run api/cmd/services/sales/main.go | go run api/cmd/tooling/logfmt/main.go
+	go run api/cmd/services/auth/main.go | go run api/cmd/tooling/logfmt/main.go
 
 run-auth:
 	go run apis/services/auth/main.go | go run apis/tooling/logfmt/main.go
