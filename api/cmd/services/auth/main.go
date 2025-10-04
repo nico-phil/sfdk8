@@ -1,15 +1,22 @@
 package main
 
-import "fmt"
+import (
+	"context"
+	"fmt"
+	"runtime"
+
+	"github.com/nico-phil/service/fondation/logger"
+)
 
 func main() {
-	err := run()
+	logger := logger.New()
+	err := run(context.Background(), logger)
 	if err != nil {
 		fmt.Println(err)
 	}
 }
 
-func run() error {
-	fmt.Println("auth service running")
+func run(ctx context.Context, log *logger.Logger) error {
+	log.Info(ctx, "startup", "GOMAXPROCS", runtime.GOMAXPROCS(0))
 	return nil
 }
