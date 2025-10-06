@@ -6,6 +6,8 @@ import (
 	"expvar"
 	"fmt"
 	"net/http"
+	"os/signal"
+	"syscall"
 	"time"
 
 	"os"
@@ -88,7 +90,6 @@ func run(ctx context.Context, log *logger.Logger) error {
 	}
 
 	fmt.Println(out)
-	// log.Info(ctx, "startup", "config", out)
 
 	expvar.NewString("build").Set(cfg.Build)
 
@@ -102,6 +103,7 @@ func run(ctx context.Context, log *logger.Logger) error {
 	// Start Debug Service
 
 	go func() {
+
 		log.Info(ctx, "startup", "status", "debug v1 router started", "host", cfg.Web.DebugHost)
 
 		if err := http.ListenAndServe(cfg.Web.DebugHost, debug.Mux()); err != nil {
@@ -124,6 +126,32 @@ func run(ctx context.Context, log *logger.Logger) error {
 		ErrorLog:     logger.NewStdLogger(log, logger.LevelError),
 	}
 
-	api.ListenAndServe()
+	shutdown := make(chan os.Signal, 1)
+	signal.Notify(shutdown, syscall.SIGINT, syscall.SIGTERM)
+
+	serverErrors := make(chan error, 1)
+
+	go func() {
+		log.Info(ctx, "startup", "status", "api router started", "host", api.Addr)
+
+		serverErrors <- api.ListenAndServe()
+	}()
+
+	select {
+	case err := <-serverErrors:
+		return fmt.Errorf("server error: %w", err)
+
+	case sig := <-shutdown:
+		log.Info(ctx, "shutdown", "status", "shutdown started", "signal", sig)
+		defer log.Info(ctx, "shutdown", "status", "shutdown complete", "signal", sig)
+
+		ctx, cancel := context.WithTimeout(ctx, cfg.Web.ShutdownTimeout)
+		defer cancel()
+
+		if err := api.Shutdown(ctx); err != nil {
+			api.Close()
+			return fmt.Errorf("could not stop server gracefully: %w", err)
+		}
+	}
 	return nil
 }
