@@ -120,7 +120,7 @@ func new(w io.Writer, minLevel Level, serviceName string, traceIDFn TraceIDFn, e
 	}
 
 	// Construct the slog JSON handler for use.
-	handler := slog.Handler(slog.NewTextHandler(w, &slog.HandlerOptions{AddSource: true, Level: slog.Level(minLevel), ReplaceAttr: f}))
+	handler := slog.Handler(slog.NewJSONHandler(w, &slog.HandlerOptions{AddSource: true, Level: slog.Level(minLevel), ReplaceAttr: f}))
 
 	// If events are to be processed, wrap the JSON handler around the custom
 	// log handler.

@@ -33,9 +33,10 @@ func main() {
 		m := make(map[string]any)
 		err := json.Unmarshal([]byte(s), &m)
 		if err != nil {
-			if service == "" {
-				fmt.Println(s)
-			}
+			// if service == "" {
+			// 	fmt.Println("****************")
+			// 	fmt.Println(s)
+			// }
 			continue
 		}
 

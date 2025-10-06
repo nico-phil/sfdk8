@@ -16,7 +16,7 @@ import (
 	"github.com/nico-phil/service/fondation/logger"
 )
 
-var build = "devlop"
+var build = "develop"
 
 func main() {
 	var log *logger.Logger
