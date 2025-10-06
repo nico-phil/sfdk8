@@ -9,19 +9,19 @@ SHELL = $(if $(wildcard $(SHELL_PATH)),/bin/ash,/bin/bash)
 
 run:
 	go run api/cmd/services/sales/main.go | go run api/cmd/tooling/logfmt/main.go
-	go run api/cmd/services/auth/main.go | go run api/cmd/tooling/logfmt/main.go
+# 	go run api/cmd/services/auth/main.go | go run api/cmd/tooling/logfmt/main.go
 
 run-auth:
-	go run apis/services/auth/main.go | go run apis/tooling/logfmt/main.go
+	go run api/cmd/services/auth/main.go | go run api/cmd/tooling/logfmt/main.go
 
 admin: 
 	go run apis/tooling/admin/main.go
 
 help:
-	go run apis/services/sales/main.go --help
+	go run api/cmd/services/sales/main.go --help
 
 version:
-	go run apis/services/sales/main.go --version
+	go run api/cmd/services/sales/main.go --version
 
 tidy:
 	go mod tidy
@@ -91,7 +91,7 @@ dev-up:
 
 	kubectl wait --timeout=120s --namespace=local-path-storage --for=condition=Available deployment/local-path-provisioner
 
-	kind load docker-image $(POSTGRES) --name $(KIND_CLUSTER)
+# 	kind load docker-image $(POSTGRES) --name $(KIND_CLUSTER)
 
 dev-down:
 	kind delete cluster --name $(KIND_CLUSTER)
@@ -107,7 +107,7 @@ dev-status:
 # ---------------------------------------------------------------------
 dev-load:
 	kind load docker-image $(SALES_IMAGE) --name $(KIND_CLUSTER)
-	kind load docker-image $(POSTGRES) --name $(KIND_CLUSTER)
+# 	kind load docker-image $(POSTGRES) --name $(KIND_CLUSTER)
 
 dev-load-db:
 	kind load docker-image $(POSTGRES) --name $(KIND_CLUSTER)
@@ -124,7 +124,7 @@ dev-update-apply: build dev-load dev-apply
 	
 
 dev-logs:
-	kubectl logs --namespace=$(NAMESPACE) -l app=$(SALES_APP) --all-containers=true -f --tail=1000 --max-log-requests=6
+	kubectl logs --namespace=$(NAMESPACE) -l app=$(SALES_APP) --all-containers=true -f --tail=1000 --max-log-requests=6 | go run api/cmd/tooling/logfmt/main.go
 
 # ---------------------------------------------------------------------
 dev-describe-deployment:
