@@ -15,6 +15,7 @@ import (
 
 	"github.com/ardanlabs/conf/v3"
 	"github.com/nico-phil/service/api/http/api/debug"
+	"github.com/nico-phil/service/api/http/api/mux"
 	"github.com/nico-phil/service/fondation/logger"
 )
 
@@ -119,7 +120,7 @@ func run(ctx context.Context, log *logger.Logger) error {
 
 	api := http.Server{
 		Addr:         cfg.Web.APIHost,
-		Handler:      nil,
+		Handler:      mux.WebAPI(log),
 		ReadTimeout:  cfg.Web.ReadTimeout,
 		WriteTimeout: cfg.Web.WriteTimeout,
 		IdleTimeout:  cfg.Web.IdleTimeout,
@@ -133,7 +134,6 @@ func run(ctx context.Context, log *logger.Logger) error {
 
 	go func() {
 		log.Info(ctx, "startup", "status", "api router started", "host", api.Addr)
-
 		serverErrors <- api.ListenAndServe()
 	}()
 

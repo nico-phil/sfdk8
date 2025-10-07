@@ -27,6 +27,8 @@ tidy:
 	go mod tidy
 	go mod vendor
 
+curl-hello:
+	curl -i -X GET http://127.0.0.1:3000/hello
 
 curl-liveness: 
 	curl -i -X GET http://localhost:3000/liveness
