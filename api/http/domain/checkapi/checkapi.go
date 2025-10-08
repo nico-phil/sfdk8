@@ -21,7 +21,7 @@ func NewAPI(build string, log *logger.Logger) *api {
 	}
 }
 
-func (api *api) Readiness(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+func (api *api) readiness(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
 	ctx, cancel := context.WithTimeout(ctx, time.Second)
 	defer cancel()
 
@@ -29,9 +29,29 @@ func (api *api) Readiness(ctx context.Context, w http.ResponseWriter, r *http.Re
 	statusCode := http.StatusOK
 
 	data := struct {
-		Status string `json:"status"`
+		Status  string `json:"status"`
+		Message string `json:"message"`
 	}{
-		Status: status,
+		Status:  status,
+		Message: "readiness",
+	}
+
+	return web.Respond(ctx, w, data, statusCode)
+}
+
+func (api *api) liveness(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
+	ctx, cancel := context.WithTimeout(ctx, time.Second)
+	defer cancel()
+
+	status := "ok"
+	statusCode := http.StatusOK
+
+	data := struct {
+		Status  string `json:"status"`
+		Message string `json:"message"`
+	}{
+		Status:  status,
+		Message: "liveness",
 	}
 
 	return web.Respond(ctx, w, data, statusCode)
