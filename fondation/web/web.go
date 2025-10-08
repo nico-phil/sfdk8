@@ -2,7 +2,6 @@ package web
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"time"
 
@@ -16,21 +15,19 @@ type Logger func(ctx context.Context, msg string, v ...any)
 type App struct {
 	*http.ServeMux
 	log Logger
-	// shutdonw chan os.Signal
-	// mw       []MidHandler
+	mw  []MidHandler
 }
 
-func NewApp(log Logger) *App {
+func NewApp(log Logger, mw ...MidHandler) *App {
 	return &App{
 		ServeMux: http.NewServeMux(),
 		log:      log,
-		// shutdonw: shutdonw,
-		// mw:       mw,
+		mw:       mw,
 	}
 
 }
 
-func (a *App) HandleFunc(pattern string, handler Handler) {
+func (a *App) HandleFunc(pattern string, handler Handler, mid ...MidHandler) {
 
 	// handler = WrapMiddleware(mw, handler)
 	// handler = WrapMiddleware(a.mw, handler)
@@ -41,10 +38,10 @@ func (a *App) HandleFunc(pattern string, handler Handler) {
 			Now:     time.Now().UTC(),
 		}
 		ctx := setValues(r.Context(), &v)
-		a.log(ctx, "from logger")
 
 		if err := handler(ctx, w, r); err != nil {
-			fmt.Println(err)
+			a.log(ctx, "web", "ERROR", err)
+			return
 		}
 
 	}
