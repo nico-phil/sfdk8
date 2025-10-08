@@ -2,26 +2,30 @@ package mux
 
 import (
 	"context"
-	"fmt"
-
-	"net/http"
 
 	"github.com/nico-phil/service/fondation/logger"
 	"github.com/nico-phil/service/fondation/web"
 )
 
-func WebAPI(log *logger.Logger) *web.App {
+type Config struct {
+	Build string
+	Log   *logger.Logger
+}
+
+// RouteAdder defines behavior that sets the routes to bind for an instance
+// of the service.
+type RouteAdder interface {
+	Add(app *web.App, cfg Config)
+}
+
+func WebAPI(cfg Config, routeAdder RouteAdder) *web.App {
 
 	logger := func(ctx context.Context, msg string, v ...any) {
-		log.Info(ctx, msg, v...)
+		cfg.Log.Info(ctx, msg, v...)
 	}
 	app := web.NewApp(logger)
 
-	f := func(ctx context.Context, w http.ResponseWriter, r *http.Request) error {
-		fmt.Fprintln(w, "hello world")
-		return nil
-	}
-	app.HandleFunc("/hello", f)
+	routeAdder.Add(app, cfg)
 
 	return app
 }

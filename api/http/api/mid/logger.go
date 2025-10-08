@@ -4,10 +4,12 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/nico-phil/service/app/api/mid"
+	"github.com/nico-phil/service/api/http/api/mid"
 	"github.com/nico-phil/service/fondation/logger"
 	"github.com/nico-phil/service/fondation/web"
 )
+
+// "github.com/nico-phil/service/http/api/mid"
 
 // Logger executes the logger middleware functionality.
 func Logger(log *logger.Logger) web.MidHandler {

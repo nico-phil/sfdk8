@@ -14,6 +14,7 @@ import (
 	"runtime"
 
 	"github.com/ardanlabs/conf/v3"
+	"github.com/nico-phil/service/api/cmd/services/sales/build/all"
 	"github.com/nico-phil/service/api/http/api/debug"
 	"github.com/nico-phil/service/api/http/api/mux"
 	"github.com/nico-phil/service/fondation/logger"
@@ -118,9 +119,13 @@ func run(ctx context.Context, log *logger.Logger) error {
 
 	log.Info(ctx, "startup", "status", "initializing V1 API support")
 
+	cfgMux := mux.Config{
+		Build: build,
+		Log:   log,
+	}
 	api := http.Server{
 		Addr:         cfg.Web.APIHost,
-		Handler:      mux.WebAPI(log),
+		Handler:      mux.WebAPI(cfgMux, all.Routes()),
 		ReadTimeout:  cfg.Web.ReadTimeout,
 		WriteTimeout: cfg.Web.WriteTimeout,
 		IdleTimeout:  cfg.Web.IdleTimeout,
