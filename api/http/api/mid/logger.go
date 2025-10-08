@@ -4,7 +4,7 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/nico-phil/service/api/http/api/mid"
+	"github.com/nico-phil/service/app/api/mid"
 	"github.com/nico-phil/service/fondation/logger"
 	"github.com/nico-phil/service/fondation/web"
 )

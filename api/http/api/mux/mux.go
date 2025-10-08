@@ -3,6 +3,7 @@ package mux
 import (
 	"context"
 
+	"github.com/nico-phil/service/api/http/api/mid"
 	"github.com/nico-phil/service/fondation/logger"
 	"github.com/nico-phil/service/fondation/web"
 )
@@ -23,7 +24,7 @@ func WebAPI(cfg Config, routeAdder RouteAdder) *web.App {
 	logger := func(ctx context.Context, msg string, v ...any) {
 		cfg.Log.Info(ctx, msg, v...)
 	}
-	app := web.NewApp(logger)
+	app := web.NewApp(logger, mid.Logger(cfg.Log))
 
 	routeAdder.Add(app, cfg)
 
