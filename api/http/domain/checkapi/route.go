@@ -14,5 +14,5 @@ type Config struct {
 func Routes(app *web.App, cfg Config) {
 	api := NewAPI(cfg.Build, cfg.Log)
 
-	app.HandleFunc("GET /liveness", api.Readiness)
+	app.HandleFunc("GET /readiness", api.Readiness)
 }

@@ -27,10 +27,10 @@ func NewApp(log Logger, mw ...MidHandler) *App {
 
 }
 
-func (a *App) HandleFunc(pattern string, handler Handler, mid ...MidHandler) {
+func (a *App) HandleFunc(pattern string, handler Handler, mw ...MidHandler) {
 
-	// handler = WrapMiddleware(mw, handler)
-	// handler = WrapMiddleware(a.mw, handler)
+	handler = WrapMiddleware(mw, handler)
+	handler = WrapMiddleware(a.mw, handler)
 
 	h := func(w http.ResponseWriter, r *http.Request) {
 		v := Values{
