@@ -4,6 +4,8 @@ import (
 	"expvar"
 	"net/http"
 	"net/http/pprof"
+
+	"github.com/arl/statsviz"
 )
 
 func Mux() *http.ServeMux {
@@ -15,6 +17,8 @@ func Mux() *http.ServeMux {
 	mux.HandleFunc("/debug/pprof/symbol", pprof.Symbol)
 	mux.HandleFunc("/debug/pprof/trace", pprof.Trace)
 	mux.Handle("/debug/vars", expvar.Handler())
+
+	statsviz.Register(mux)
 
 	return mux
 }
