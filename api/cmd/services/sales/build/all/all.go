@@ -22,4 +22,15 @@ func (add) Add(app *web.App, cfg mux.Config) {
 		Log:   cfg.Log,
 	})
 
+	// testapi.Routes(app, testapi.Config{
+	// 	Log:        cfg.Log,
+	// 	AuthClient: cfg.AuthClient,
+	// })
+
+	// userapi.Routes(app, userapi.Config{
+	// 	Log:        cfg.Log,
+	// 	UserBus:    userBus,
+	// 	AuthClient: cfg.AuthClient,
+	// })
+
 }
