@@ -16,4 +16,5 @@ func Routes(app *web.App, cfg Config) {
 
 	app.HandleFunc("GET /readiness", api.readiness)
 	app.HandleFunc("GET /liveness", api.liveness)
+	app.HandleFunc("GET /testerr", api.testerr)
 }
