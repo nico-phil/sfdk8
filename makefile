@@ -38,8 +38,11 @@ curl-readiness:
 	curl -i -X GET http://127.0.0.1:3000/readiness
 
 
+curl-testerr: 
+	curl -i -X GET http://127.0.0.1:3000/testerr
+
 curl-panic: 
-	curl -i -X GET http://localhost:3000/testpanic
+	curl -i -X GET http://127.0.0.1:3000/testpanic
 
 
 # ==============================================================================

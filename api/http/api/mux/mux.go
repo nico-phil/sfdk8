@@ -24,7 +24,7 @@ func WebAPI(cfg Config, routeAdder RouteAdder) *web.App {
 	logger := func(ctx context.Context, msg string, v ...any) {
 		cfg.Log.Info(ctx, msg, v...)
 	}
-	app := web.NewApp(logger, mid.Logger(cfg.Log))
+	app := web.NewApp(logger, mid.Logger(cfg.Log), mid.Errors(cfg.Log), mid.Metrics(), mid.Panics())
 
 	routeAdder.Add(app, cfg)
 
