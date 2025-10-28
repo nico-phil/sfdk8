@@ -24,6 +24,7 @@ type Claims struct {
 // HasRole check if the specified role exists
 func (c Claims) HasRole(r string) bool {
 	return slices.Contains(c.Roles, r)
+
 }
 
 // KeyLookup declared a method set of behavior for looking up
@@ -112,15 +113,15 @@ func (a *Auth) Authenticate(ctx context.Context, bearerToken string) (Claims, er
 		return Claims{}, fmt.Errorf("failed to fetch public key: %w", err)
 	}
 
-	_ = map[string]any{
+	input := map[string]any{
 		"Key":   pem,
 		"Token": parts[1],
 		"ISS":   a.issuer,
 	}
 
-	// if err := a.opaPolicyEvaluation(ctx, regoAuthentication, RuleAuthenticate, input); err != nil {
-	// 	return Claims{}, fmt.Errorf("authentication failed : %w", err)
-	// }
+	if err := a.opaPolicyEvaluation(ctx, regoAuthentication, RuleAuthenticate, input); err != nil {
+		return Claims{}, fmt.Errorf("authentication failed : %w", err)
+	}
 
 	// Check the database for this user to verify they are still enabled.
 
