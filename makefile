@@ -15,7 +15,7 @@ run-auth:
 	go run api/cmd/services/auth/main.go | go run api/cmd/tooling/logfmt/main.go
 
 admin: 
-	go run apis/tooling/admin/main.go
+	go run api/cmd/tooling/admin/main.go
 
 help:
 	go run api/cmd/services/sales/main.go --help
