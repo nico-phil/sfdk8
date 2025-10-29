@@ -13,6 +13,7 @@ import (
 	"github.com/ardanlabs/conf/v3"
 	"github.com/nico-phil/service/api/http/api/debug"
 	"github.com/nico-phil/service/fondation/logger"
+	"github.com/nico-phil/service/fondation/web"
 )
 
 var build = "develop"
@@ -27,7 +28,7 @@ func main() {
 	}
 
 	traceIDFn := func(ctx context.Context) string {
-		return "223"
+		return web.GetTraceID(ctx)
 	}
 
 	log = logger.NewWithEvents(os.Stdout, logger.LevelInfo, "AUTH", traceIDFn, events)
