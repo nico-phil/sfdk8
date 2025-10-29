@@ -141,7 +141,8 @@ dev-describe-sales:
 dev-start-db:
 	docker run -d -p 5432:5432 --name lab_db -e POSTGRES_PASSWORD=lab_db -e POSTGRES_DB=lab_db postgres
 
-  
+connect-db:
+	 psql 'postgres://lab_db:lab_db@127.0.0.1/lab_db?sslmode=disable'
 
 # ==============================================================================
 # Metrics and Tracing
